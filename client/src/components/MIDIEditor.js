@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import * as Tone from 'tone';
 import io from 'socket.io-client';
-import axios from 'axios';
+import api from '../config/api';
 import './MIDIEditor.css';
 import TrackList from './TrackList';
 import PianoRoll from './PianoRoll';
@@ -141,7 +141,7 @@ function MIDIEditor({ project, onBack, onProjectUpdate }) {
         console.warn('Cannot load tracks: project ID missing');
         return;
       }
-      const response = await axios.get(`/api/projects/${project._id}`);
+      const response = await api.get(`/api/projects/${project._id}`);
       if (response.data && Array.isArray(response.data.tracks)) {
         setTracks(response.data.tracks);
       } else {
@@ -246,7 +246,7 @@ function MIDIEditor({ project, onBack, onProjectUpdate }) {
         return cleanedTrack;
       }).filter(Boolean) : [];
       
-      await axios.put(`/api/projects/${project._id}`, {
+      await api.put(`/api/projects/${project._id}`, {
         tracks: tracksToSave,
         bpm: typeof bpm === 'number' && bpm > 0 && bpm <= 300 ? bpm : 120
       });
@@ -608,7 +608,7 @@ function MIDIEditor({ project, onBack, onProjectUpdate }) {
       // Axios will throw for non-2xx status, but we want to parse the error message
       let response;
       try {
-        response = await axios.post(
+        response = await api.post(
           `/api/export/${format}/${project._id}`,
           {},
           { 

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import api from './config/api';
 import ProjectList from './components/ProjectList';
 import MIDIEditor from './components/MIDIEditor';
 import './App.css';
@@ -16,23 +17,23 @@ function App() {
 
   const fetchProjects = async (isRetry = false) => {
     try {
-      const response = await fetch('/api/projects');
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        if (response.status === 503 && retryCount < MAX_RETRIES) {
-          console.warn('Database not connected yet, retrying...', errorData.message);
-          setRetryCount(prev => prev + 1);
-          // Retry after a delay if database is not connected
-          setTimeout(() => fetchProjects(true), 2000);
-          return;
-        }
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-      }
-      const data = await response.json();
+      const response = await api.get('/api/projects');
+      const data = response.data;
       // Ensure data is an array
       setProjects(Array.isArray(data) ? data : []);
       setRetryCount(0); // Reset retry count on success
     } catch (error) {
+      const status = error.response?.status;
+      const errorData = error.response?.data || {};
+      
+      if (status === 503 && retryCount < MAX_RETRIES) {
+        console.warn('Database not connected yet, retrying...', errorData.message || error.message);
+        setRetryCount(prev => prev + 1);
+        // Retry after a delay if database is not connected
+        setTimeout(() => fetchProjects(true), 2000);
+        return;
+      }
+      
       console.error('Error fetching projects:', error);
       setProjects([]); // Set empty array on error
     } finally {
@@ -49,22 +50,13 @@ function App() {
         return;
       }
 
-      const response = await fetch('/api/projects', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: name.trim(),
-          description: description ? description.trim() : '',
-          owner: 'user-' + Date.now()
-        })
+      const response = await api.post('/api/projects', {
+        name: name.trim(),
+        description: description ? description.trim() : '',
+        owner: 'user-' + Date.now()
       });
       
-      if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-      }
-      
-      const project = await response.json();
+      const project = response.data;
       if (project && project._id) {
         setProjects(prev => [...(prev || []), project]);
         setCurrentProject(project);
@@ -73,7 +65,8 @@ function App() {
       }
     } catch (error) {
       console.error('Error creating project:', error);
-      alert('Failed to create project: ' + (error.message || 'Unknown error'));
+      const errorMessage = error.response?.data?.error || error.message || 'Unknown error';
+      alert('Failed to create project: ' + errorMessage);
     }
   };
 
@@ -92,14 +85,7 @@ function App() {
     }
 
     try {
-      const response = await fetch(`/api/projects/${projectId}`, {
-        method: 'DELETE'
-      });
-      
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-      }
+      await api.delete(`/api/projects/${projectId}`);
       
       // Remove project from list
       setProjects(projects.filter(p => p._id !== projectId));
@@ -110,7 +96,8 @@ function App() {
       }
     } catch (error) {
       console.error('Error deleting project:', error);
-      alert('Failed to delete project: ' + error.message);
+      const errorMessage = error.response?.data?.error || error.message || 'Unknown error';
+      alert('Failed to delete project: ' + errorMessage);
     }
   };
 

@@ -1,0 +1,39 @@
+services:
+  # Backend Service
+  - type: web
+    name: spotmies-backend
+    env: node
+    plan: free
+    rootDir: server
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: PORT
+        value: 5000
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false  # Set this in Render dashboard
+      - key: CLIENT_URL
+        sync: false  # Set this after frontend deploys
+      - key: OPENAI_API_KEY
+        sync: false  # Set this in Render dashboard
+      - key: ANTHROPIC_API_KEY
+        sync: false  # Optional, set if using Claude
+
+  # Frontend Service (Static Site)
+  - type: web
+    name: spotmies-frontend
+    env: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./build
+    envVars:
+      - key: REACT_APP_SERVER_URL
+        sync: false  # Set this to your backend URL (e.g., https://spotmies-backend.onrender.com)
+
+databases:
+  - name: spotmies-mongodb
+    plan: free
+    databaseName: spotmies_ai
+

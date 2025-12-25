@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import api from '../config/api';
 import './AIPanel.css';
 
 function AIPanel({ tracks, selectedTrack, onAddNotes }) {
@@ -22,7 +22,7 @@ function AIPanel({ tracks, selectedTrack, onAddNotes }) {
     setLoading(true);
     try {
       const notes = getSelectedTrackNotes();
-      const response = await axios.post('/api/ai/harmony', {
+      const response = await api.post('/api/ai/harmony', {
         notes: notes.map(n => ({ note: n.note })),
         context: {
           track: selectedTrack.name,
@@ -47,7 +47,7 @@ function AIPanel({ tracks, selectedTrack, onAddNotes }) {
         ? [notes[0].note] 
         : ['C'];
       
-      const response = await axios.post('/api/ai/chords', {
+      const response = await api.post('/api/ai/chords', {
         currentChords,
         key: 'C',
         style
@@ -70,7 +70,7 @@ function AIPanel({ tracks, selectedTrack, onAddNotes }) {
     setLoading(true);
     try {
       const notes = getSelectedTrackNotes();
-      const response = await axios.post('/api/ai/melody', {
+      const response = await api.post('/api/ai/melody', {
         melody: notes.map(n => ({ note: n.note })),
         context: {
           track: selectedTrack.name
