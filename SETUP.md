@@ -14,8 +14,8 @@
 
 ```bash
 # Clone the repository
-git clone <repository-url>
-cd spotmies_ai
+git clone https://github.com/AbhiRohit459/Real-Time-Music-Collaboration-Platform.git
+cd Real-Time-Music-Collaboration-Platform
 
 # Install all dependencies
 npm run install-all

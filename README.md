@@ -41,7 +41,7 @@ A real-time collaborative MIDI composition platform with AI-powered harmonizatio
 
 1. Clone the repository:
 ```bash
-git clone <repository-url>
+git clone https://github.com/AbhiRohit459/Real-Time-Music-Collaboration-Platform.git
 cd spotmies_ai
 ```
 
