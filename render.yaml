@@ -4,9 +4,8 @@ services:
     name: spotmies-backend
     env: node
     plan: free
-    rootDir: server
-    buildCommand: npm install
-    startCommand: npm start
+    buildCommand: cd server && npm install
+    startCommand: cd server && npm start
     envVars:
       - key: PORT
         value: 5000
