@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
+    <meta name="description" content="Collaborative MIDI composition platform with AI harmonization" />
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎹</text></svg>" />
+    <title>Spotmies AI - Collaborative MIDI Editor</title>
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      // Suppress AudioContext warnings before React loads
+      // This runs before any JavaScript modules are imported
+      (function() {
+        const originalWarn = console.warn;
+        const originalError = console.error;
+        
+        const suppressAudioContextWarn = function(...args) {
+          const message = args[0];
+          if (typeof message === 'string') {
+            const lowerMsg = message.toLowerCase();
+            if (lowerMsg.includes('audiocontext') || 
+                lowerMsg.includes('must be resumed') || 
+                lowerMsg.includes('user gesture') ||
+                lowerMsg.includes('autoplay')) {
+              return; // Suppress
+            }
+          }
+          return originalWarn.apply(console, args);
+        };
+        
+        const suppressAudioContextError = function(...args) {
+          const message = args[0];
+          if (typeof message === 'string') {
+            const lowerMsg = message.toLowerCase();
+            if (lowerMsg.includes('audiocontext') || 
+                lowerMsg.includes('must be resumed') || 
+                lowerMsg.includes('user gesture') ||
+                lowerMsg.includes('autoplay')) {
+              return; // Suppress
+            }
+          }
+          return originalError.apply(console, args);
+        };
+        
+        console.warn = suppressAudioContextWarn;
+        console.error = suppressAudioContextError;
+      })();
+    </script>
+    <div id="root"></div>
+  </body>
+</html>
+

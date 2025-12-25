@@ -1,0 +1,101 @@
+.playback-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, rgba(45, 45, 45, 0.95) 0%, rgba(35, 35, 35, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(102, 126, 234, 0.2);
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.playback-buttons {
+  display: flex;
+  gap: 12px;
+}
+
+.play-button {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  min-width: 120px;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.play-button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.play-button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.play-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.6);
+}
+
+.play-button:active {
+  transform: translateY(-1px);
+}
+
+.play-button.playing {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+  animation: pulse-play 2s ease-in-out infinite;
+}
+
+@keyframes pulse-play {
+  0%, 100% {
+    box-shadow: 0 4px 15px rgba(240, 147, 251, 0.4);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(240, 147, 251, 0.7);
+  }
+}
+
+.bpm-control {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.bpm-control label {
+  color: #cccccc;
+  font-size: 14px;
+}
+
+.bpm-input {
+  background: #1a1a1a;
+  border: 1px solid #3d3d3d;
+  border-radius: 6px;
+  padding: 6px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  width: 80px;
+  text-align: center;
+}
+
+.bpm-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+

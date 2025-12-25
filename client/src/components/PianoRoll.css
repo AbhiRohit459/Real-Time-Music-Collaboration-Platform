@@ -1,0 +1,129 @@
+.piano-roll {
+  display: flex;
+  flex: 1;
+  overflow: auto;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 100%);
+  position: relative;
+}
+
+.piano-roll.empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #888888;
+  font-size: 18px;
+}
+
+.piano-keys {
+  width: 70px;
+  background: linear-gradient(135deg, #252525 0%, #1f1f1f 100%);
+  border-right: 2px solid rgba(102, 126, 234, 0.3);
+  position: sticky;
+  left: 0;
+  z-index: 10;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.piano-key {
+  border-bottom: 1px solid #3d3d3d;
+  cursor: pointer;
+  position: relative;
+  transition: background 0.1s;
+}
+
+.piano-key.white {
+  background: linear-gradient(180deg, #ffffff 0%, #f5f5f5 100%);
+  color: #000000;
+  border-right: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.piano-key.black {
+  background: linear-gradient(180deg, #1a1a1a 0%, #0a0a0a 100%);
+  color: #ffffff;
+  height: 12px !important;
+  margin-top: -12px;
+  z-index: 5;
+  margin-left: 45px;
+  width: 25px;
+  border-radius: 0 0 6px 6px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+.piano-key:hover {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.piano-key:active {
+  transform: scale(0.98);
+}
+
+.piano-key-label {
+  position: absolute;
+  left: 4px;
+  font-size: 10px;
+  color: #666666;
+}
+
+.piano-roll-content {
+  flex: 1;
+  position: relative;
+  overflow: auto;
+}
+
+.piano-roll-grid {
+  position: relative;
+  min-height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    #1a1a2e 0px,
+    #1a1a2e 19px,
+    #0f0f23 19px,
+    #0f0f23 20px
+  );
+}
+
+.grid-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: #3d3d3d;
+  pointer-events: none;
+}
+
+.midi-note {
+  position: absolute;
+  height: 18px;
+  border-radius: 4px;
+  cursor: move;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.midi-note:hover {
+  transform: scaleY(1.2);
+  box-shadow: 0 4px 16px rgba(102, 126, 234, 0.6);
+  border-color: rgba(255, 255, 255, 0.6);
+  z-index: 5;
+}
+
+.midi-note.selected {
+  border: 3px solid #ffffff;
+  box-shadow: 0 0 20px rgba(102, 126, 234, 1), 0 4px 16px rgba(0, 0, 0, 0.4);
+  transform: scaleY(1.15);
+  z-index: 6;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(102, 126, 234, 1), 0 4px 16px rgba(0, 0, 0, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(102, 126, 234, 0.8), 0 4px 20px rgba(0, 0, 0, 0.5);
+  }
+}
+

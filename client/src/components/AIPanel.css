@@ -1,0 +1,198 @@
+.ai-panel {
+  padding: 24px;
+  height: 100%;
+  overflow-y: auto;
+  background: transparent;
+}
+
+.ai-panel h3 {
+  margin: 0 0 20px 0;
+  font-size: 18px;
+  color: #ffffff;
+}
+
+.ai-panel-message {
+  padding: 20px;
+  text-align: center;
+  color: #888888;
+  font-size: 14px;
+}
+
+.ai-controls {
+  margin-bottom: 24px;
+}
+
+.suggestion-type-selector {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.suggestion-type-selector button {
+  flex: 1;
+  padding: 8px;
+  background: #3d3d3d;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background 0.2s;
+}
+
+.suggestion-type-selector button:hover {
+  background: #4d4d4d;
+}
+
+.suggestion-type-selector button.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.style-selector {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.style-selector label {
+  color: #cccccc;
+  font-size: 14px;
+}
+
+.style-selector select {
+  flex: 1;
+  padding: 8px;
+  background: #1a1a1a;
+  border: 1px solid #3d3d3d;
+  border-radius: 6px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.style-selector select:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.get-suggestions-button {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.get-suggestions-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+.get-suggestions-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.suggestions {
+  margin-top: 24px;
+}
+
+.suggestion-reason {
+  padding: 12px;
+  background: #3d3d3d;
+  border-radius: 6px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+.suggestion-item {
+  margin-bottom: 20px;
+  padding: 20px;
+  background: linear-gradient(135deg, rgba(37, 37, 37, 0.9) 0%, rgba(31, 31, 31, 0.9) 100%);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
+  transition: all 0.3s;
+}
+
+.suggestion-item:hover {
+  border-color: rgba(102, 126, 234, 0.4);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px);
+}
+
+.suggestion-item h4 {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: #ffffff;
+}
+
+.suggestion-notes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.note-badge {
+  padding: 8px 14px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+  transition: all 0.2s;
+}
+
+.note-badge:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.5);
+}
+
+.progression,
+.variation {
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #3d3d3d;
+}
+
+.progression:last-child,
+.variation:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.apply-button {
+  width: 100%;
+  padding: 10px;
+  background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  transition: all 0.3s;
+  box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+}
+
+.apply-button:hover {
+  background: linear-gradient(135deg, #45a049 0%, #4CAF50 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.5);
+}
+
+.apply-button:active {
+  transform: translateY(0);
+}
+

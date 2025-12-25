@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:7
+    container_name: spotmies_mongodb
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: spotmies_ai
+    networks:
+      - spotmies_network
+
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    container_name: spotmies_server
+    ports:
+      - "5000:5000"
+    environment:
+      - NODE_ENV=production
+      - PORT=5000
+      - MONGODB_URI=mongodb://mongodb:27017/spotmies_ai
+      - CLIENT_URL=http://localhost:3000
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+    volumes:
+      - ./server:/app
+      - /app/node_modules
+      - ./server/exports:/app/exports
+    depends_on:
+      - mongodb
+    networks:
+      - spotmies_network
+    command: npm run dev
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    container_name: spotmies_client
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_SERVER_URL=http://localhost:5000
+    volumes:
+      - ./client:/app
+      - /app/node_modules
+    depends_on:
+      - server
+    networks:
+      - spotmies_network
+    command: npm start
+
+volumes:
+  mongodb_data:
+
+networks:
+  spotmies_network:
+    driver: bridge
+
